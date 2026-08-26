@@ -23,7 +23,7 @@ jobs:
             -target HowFishControlsDemo \
             -configuration Release \
             -sdk iphoneos \
-            -derivedDataPath "$PWD/build" \
+            CONFIGURATION_BUILD_DIR="$PWD/build/Release-iphoneos" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
@@ -32,7 +32,7 @@ jobs:
       - name: Package IPA
         run: |
           set -euo pipefail
-          APP=$(find "$PWD/build/Build/Products/Release-iphoneos" -maxdepth 1 -name '*.app' -type d | head -1)
+          APP=$(find "$PWD/build/Release-iphoneos" -maxdepth 1 -name '*.app' -type d | head -1)
           test -n "$APP"
           rm -rf Payload HowFishControlsDemo-unsigned.ipa
           mkdir Payload
