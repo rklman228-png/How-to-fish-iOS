@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="screen-orientation" content="landscape" />
-<title>How to Fish — Controls Prototype</title>
+<title>How to Fish — Controls Prototype v2</title>
 <style>
 :root{
   --ink:#11100f;
@@ -29,34 +29,45 @@ body::before{
 }
 #hud{position:fixed;inset:0;padding:max(12px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));}
 
+/* Mobile controls deliberately use the same flat material language as the PC hotbar slots.
+   The hotbar itself stays visually untouched; on the real port it only receives touch hitboxes. */
 .btn{
   position:absolute;display:grid;place-items:center;
-  width:58px;height:58px;border:2.2px solid var(--line);border-radius:17px;
-  background:linear-gradient(145deg,var(--paper2),var(--paper));
-  box-shadow:0 5px 0 rgba(25,22,18,.55),0 8px 18px var(--shadow),inset 0 1px 0 rgba(255,255,255,.5);
-  color:var(--ink);transform:translateY(0) scale(1);transition:transform .07s ease,filter .07s ease,background .07s ease;
+  width:58px;height:58px;
+  border:1.6px solid rgba(17,16,15,.70);
+  border-radius:12px;
+  background:rgba(240,233,210,.64);
+  box-shadow:0 3px 0 rgba(20,18,16,.48),0 4px 10px rgba(0,0,0,.20);
+  color:#171512;
+  transform:translateY(0) scale(1);
+  transition:transform .06s ease,background .06s ease,box-shadow .06s ease;
+  backdrop-filter:blur(.7px);
 }
-.btn::after{content:"";position:absolute;inset:4px;border:1px solid rgba(17,16,15,.17);border-radius:12px;pointer-events:none}
-.btn.pressed{transform:translateY(4px) scale(.97);box-shadow:0 1px 0 rgba(25,22,18,.55),0 4px 10px var(--shadow);background:var(--pressed)}
-.btn .key{position:absolute;left:6px;top:4px;font-size:9px;line-height:1;font-weight:900;opacity:.52;letter-spacing:-.02em}
-.btn svg{width:29px;height:29px;overflow:visible;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.btn.small{width:45px;height:45px;border-radius:14px}
+.btn::after{display:none}
+.btn.pressed{
+  transform:translateY(2px);
+  background:rgba(255,244,194,.94);
+  box-shadow:0 1px 0 rgba(20,18,16,.48),0 2px 5px rgba(0,0,0,.18);
+}
+.btn .key{position:absolute;left:6px;top:5px;font-size:9px;line-height:1;font-weight:900;opacity:.60;letter-spacing:-.02em}
+.btn svg{width:28px;height:28px;overflow:visible;stroke:currentColor;fill:none;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
+.btn.small{width:45px;height:45px;border-radius:10px}
 .btn.small svg{width:22px;height:22px}
-.btn.mini{width:39px;height:39px;border-radius:12px}
+.btn.mini{width:39px;height:39px;border-radius:9px}
 .btn.mini svg{width:19px;height:19px}
 
 #joy{position:absolute;left:30px;bottom:28px;width:132px;height:132px;border-radius:50%;background:rgba(12,12,10,.20);border:2px solid rgba(245,239,218,.62);box-shadow:inset 0 0 0 7px rgba(0,0,0,.08),0 8px 22px rgba(0,0,0,.23)}
 #joy::before,#joy::after{content:"";position:absolute;left:50%;top:50%;background:rgba(245,239,218,.28);transform:translate(-50%,-50%)}
 #joy::before{width:2px;height:88px}#joy::after{width:88px;height:2px}
-#knob{position:absolute;left:50%;top:50%;width:61px;height:61px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(145deg,rgba(255,249,226,.94),rgba(214,205,178,.86));border:2px solid rgba(17,16,15,.72);box-shadow:0 5px 12px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.65)}
+#knob{position:absolute;left:50%;top:50%;width:61px;height:61px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(240,233,210,.72);border:1.6px solid rgba(17,16,15,.70);box-shadow:0 3px 0 rgba(20,18,16,.42),0 4px 10px rgba(0,0,0,.20)}
 
 #lookZone{position:absolute;left:42%;right:0;top:0;bottom:0;}
 
-#primary{right:38px;bottom:42px;width:76px;height:76px;border-radius:24px}
-#secondary{right:122px;bottom:86px;width:62px;height:62px;border-radius:20px}
+#primary{right:38px;bottom:42px;width:76px;height:76px;border-radius:15px}
+#secondary{right:122px;bottom:86px;width:62px;height:62px;border-radius:13px}
 #interact{right:48px;bottom:133px}
 #dropWrap{position:absolute;right:127px;bottom:156px;width:69px;height:69px}
-#drop{inset:6px;width:57px;height:57px;border-radius:18px}
+#drop{inset:6px;width:57px;height:57px;border-radius:12px}
 #dropRing{position:absolute;inset:0;border-radius:50%;background:conic-gradient(rgba(255,239,145,.97) calc(var(--p,0)*1turn),rgba(245,239,218,.19) 0);-webkit-mask:radial-gradient(circle,transparent 59%,#000 61%);mask:radial-gradient(circle,transparent 59%,#000 61%);opacity:0;transition:opacity .1s ease;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}
 #dropWrap.charging #dropRing{opacity:1}
 
