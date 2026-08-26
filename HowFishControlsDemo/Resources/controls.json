@@ -1,0 +1,25 @@
+{
+  "source": "How to Fish v1.0.9 InputActions asset + Assembly-CSharp.dll behavior names",
+  "player": {
+    "PlayerMove": {"keyboard": ["W","A","S","D"], "gamepad":"leftStick", "mobile":"left joystick", "mode":"continuous"},
+    "PlayerLook": {"mouse":"delta", "gamepad":"rightStick", "mobile":"right-side drag", "mode":"continuous"},
+    "PlayerLeftClick": {"mouse":"leftButton", "gamepad":"rightTrigger", "mobile":"primary button", "mode":"press/release; context-sensitive hold/tap"},
+    "PlayerRightClick": {"mouse":"rightButton", "gamepad":"leftTrigger", "mobile":"secondary button", "mode":"press/release; context-sensitive hold/tap"},
+    "PlayerJump": {"keyboard":"Space", "gamepad":"buttonSouth", "mobile":"jump", "mode":"tap"},
+    "PlayerSprint": {"keyboard":"LeftShift", "gamepad":"leftStickPress", "mobile":"sprint", "mode":"hold; canceled callback exists"},
+    "PlayerCrouch": {"keyboard":"LeftCtrl", "gamepad":"buttonEast", "mobile":"crouch", "mode":"hold; canceled callback exists"},
+    "PlayerPickUp": {"keyboard":"E", "gamepad":"buttonWest", "mobile":"interact/hand", "mode":"tap"},
+    "PlayerDrop": {"keyboard":"Q", "gamepad":"buttonNorth", "mobile":"throw/drop", "mode":"tap + hold/release charge; DropInput/DropInputCanceled, _isHoldingDrop, Start/Update/StopDropUI, _startDropForceDelay, _timeUntilMaxDropForce"},
+    "PlayerTab": {"keyboard":"Tab", "gamepad":"select", "mobile":"book", "mode":"tap"},
+    "PlayerChangeSkin": {"keyboard":["Z","C"], "gamepad":"dpad/right", "mobile":["prev","next"], "mode":"axis/tap"},
+    "ChangeBait": {"keyboard":"B", "gamepad":"rightStickPress", "mobile":"hook", "mode":"tap"},
+    "InventoryNone": {"keyboard":"X", "gamepad":"dpad/down", "mobile":"X hotbar", "mode":"tap"},
+    "Inventory1-9": {"keyboard":"1..9", "mobile":"hotbar slots", "mode":"tap"},
+    "InventoryScroll": {"mouse":["scroll/down","scroll/up"], "gamepad":["rightShoulder","leftShoulder"], "mobile":"swipe hotbar", "mode":"axis"},
+    "WeaponReload": {"keyboard":"R", "gamepad":"buttonWest", "mobile":"reload", "mode":"tap"},
+    "WeaponInspect": {"keyboard":"F", "gamepad":"dpad/up", "mobile":"eye", "mode":"tap"},
+    "PushToTalk": {"keyboard":"V", "gamepad":"dpad/left", "mobile":"mic", "mode":"hold; canceled callback exists"},
+    "Skip": {"keyboard":"Space", "gamepad":"buttonSouth", "mobile":"same contextual jump/confirm action", "mode":"tap/context"},
+    "Pause": {"keyboard":"Escape", "gamepad":"start", "mobile":"pause", "mode":"tap"}
+  }
+}
