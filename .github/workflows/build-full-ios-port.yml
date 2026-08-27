@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat porting/payload/game.torrent.b64.part* | base64 -d > game.torrent
+          cat porting/payload/game.torrent.gz.b64.part* | base64 -d | gzip -dc > game.torrent
           echo 'f24cb82252acaf8892cedf24197a31f177bacc65e71da9b5a7227d0b61ac8087  game.torrent' | sha256sum -c -
 
       - name: Fetch original game build
