@@ -1,0 +1,44 @@
+name: Fetch Unity iOS toolchain
+
+on:
+  push:
+    branches: [ ci-build ]
+    paths:
+      - '.github/workflows/fetch-unity-ios-toolchain.yml'
+
+concurrency:
+  group: how-to-fish-ios-build
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download exact Unity 6000.4.4f1 Linux editor and iOS support
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://download.unity3d.com/download_unity/360f97ecca93'
+          curl -fL --retry 5 --retry-delay 3 --progress-bar \
+            "$BASE/LinuxEditorInstaller/Unity-6000.4.4f1.tar.xz" \
+            -o Unity-6000.4.4f1.tar.xz
+          curl -fL --retry 5 --retry-delay 3 --progress-bar \
+            "$BASE/LinuxEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-6000.4.4f1.tar.xz" \
+            -o UnitySetup-iOS-Support-for-Editor-6000.4.4f1.tar.xz
+          sha256sum *.tar.xz | tee SHA256SUMS
+          ls -lh *.tar.xz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unity-6000.4.4f1-linux-editor
+          path: Unity-6000.4.4f1.tar.xz
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unity-6000.4.4f1-linux-ios-support
+          path: UnitySetup-iOS-Support-for-Editor-6000.4.4f1.tar.xz
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: unity-6000.4.4f1-sha256
+          path: SHA256SUMS
