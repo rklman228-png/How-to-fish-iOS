@@ -69,10 +69,10 @@ jobs:
             if curl -fsS http://127.0.0.1:39999/ >/dev/null; then break; fi
             sleep 1
           done
-          curl -fsS -L -X POST --data-urlencode "path=$GAME_ROOT" http://127.0.0.1:39999/LoadFolder >/dev/null
+          curl -fsS --data-urlencode "path=$GAME_ROOT" http://127.0.0.1:39999/LoadFolder >/dev/null
           rm -rf "$EXPORT_ROOT"
           mkdir -p "$EXPORT_ROOT"
-          curl -fsS -L -X POST --data-urlencode "path=$EXPORT_ROOT" http://127.0.0.1:39999/Export/UnityProject >/dev/null
+          curl -fsS --data-urlencode "path=$EXPORT_ROOT" http://127.0.0.1:39999/Export/UnityProject >/dev/null
           kill "$AR_PID" 2>/dev/null || true
           wait "$AR_PID" 2>/dev/null || true
           trap - EXIT
