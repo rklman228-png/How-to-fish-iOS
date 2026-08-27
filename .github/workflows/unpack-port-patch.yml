@@ -1,0 +1,29 @@
+name: Unpack port patch
+
+on:
+  push:
+    branches: [ ci-build ]
+    paths:
+      - '.github/workflows/unpack-port-patch.yml'
+
+concurrency:
+  group: how-to-fish-ios-build
+  cancel-in-progress: false
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode preserved port patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat porting/payload/code.patch.gz.b64.part* | base64 -d > porting/code.patch.gz
+          gzip -dc porting/code.patch.gz > porting/howtofish-ios-port-code.patch
+          wc -c porting/howtofish-ios-port-code.patch
+          sed -n '1,120p' porting/howtofish-ios-port-code.patch
+      - uses: actions/upload-artifact@v4
+        with:
+          name: howtofish-ios-port-code-patch
+          path: porting/howtofish-ios-port-code.patch
