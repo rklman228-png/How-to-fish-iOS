@@ -1,0 +1,41 @@
+name: Fetch Roslyn tool
+
+on:
+  push:
+    branches: [ port-dev ]
+    paths:
+      - '.github/workflows/fetch-roslyn.yml'
+
+concurrency:
+  group: how-to-fish-ios-build
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.424'
+      - name: Package minimal Roslyn runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT="$(dirname "$(readlink -f "$(command -v dotnet)")")"
+          SDK="$(dirname "$(find "$ROOT/sdk" -path '*/Roslyn/bincore/csc.dll' -print -quit)")"
+          SDK="$(dirname "$SDK")"
+          RUNTIME="$(find "$ROOT/shared/Microsoft.NETCore.App" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)"
+          FXR="$(find "$ROOT/host/fxr" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)"
+          mkdir -p bundle/host/fxr bundle/shared/Microsoft.NETCore.App bundle/Roslyn
+          cp "$ROOT/dotnet" bundle/dotnet
+          cp -a "$FXR" bundle/host/fxr/
+          cp -a "$RUNTIME" bundle/shared/Microsoft.NETCore.App/
+          cp -a "$ROOT/sdk/8.0.424/Roslyn/bincore/." bundle/Roslyn/
+          (cd bundle && ./dotnet ./Roslyn/csc.dll -version)
+          tar -czf roslyn-linux-x64.tgz -C bundle .
+          du -h roslyn-linux-x64.tgz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roslyn-linux-x64
+          path: roslyn-linux-x64.tgz
+          compression-level: 0
